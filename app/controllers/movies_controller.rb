@@ -1,8 +1,6 @@
 class MoviesController < ApplicationController
   def new
     @the_movie = Movie.new
-
-    render "movies/new"
   end
 
   def index
@@ -16,7 +14,6 @@ class MoviesController < ApplicationController
       end
 
       format.html do
-        render "movies/index"
       end
     end
   end
@@ -27,8 +24,6 @@ class MoviesController < ApplicationController
     matching_movies = Movie.where({ id: the_id })
 
     @the_movie = matching_movies.first
-
-    render "movies/show"
   end
 
   def create
@@ -50,8 +45,6 @@ class MoviesController < ApplicationController
     matching_movies = Movie.where({ id: the_id })
 
     @the_movie = matching_movies.first
-
-    render "movies/edit"
   end
 
   def update
