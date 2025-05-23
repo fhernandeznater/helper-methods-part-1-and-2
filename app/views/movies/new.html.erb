@@ -4,20 +4,20 @@
   <p style="color: red;"><%= message %></p>
 <% end %>
 
-<%= form_with(url: movies_path(@movie)) do %>
+<%= form_with(model: @movie) do |form| %>
   <div>
-    <%= label_tag :title %>
+    <%= form.label :title %>
 
-    <%= text_field_tag "movie[title]", @movie.title %>
+    <%= form.text_field :title %>
   </div>
 
   <div>
-    <%= label_tag :description %>
+    <%= form.label :description %>
 
-    <%= text_area_tag "movie[description]", @movie.description, { rows: 3 } %>
+    <%= form.text_area :description, { rows: 3 } %>
   </div>
 
-  <%= button_tag "Create Movie" %>
+  <%= form.button %>
 
 <% end %>
 
