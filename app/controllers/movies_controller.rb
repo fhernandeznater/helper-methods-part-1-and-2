@@ -1,16 +1,16 @@
 class MoviesController < ApplicationController
   def new
-    @the_movie = Movie.new
+    @movie = Movie.new
   end
 
   def index
     matching_movies = Movie.all
 
-    @list_of_movies = matching_movies.order({ created_at: :desc })
+    @movies = matching_movies.order({ created_at: :desc })
 
     respond_to do |format|
       format.json do
-        render json: @list_of_movies
+        render json: @movies
       end
 
       format.html do
@@ -19,20 +19,16 @@ class MoviesController < ApplicationController
   end
 
   def show
-    the_id = params.fetch(:id)
-
-    matching_movies = Movie.where({ id: the_id })
-
-    @the_movie = matching_movies.first
+    @movie = Movie.find(params.fetch(:id))
   end
 
   def create
-    @the_movie = Movie.new
-    @the_movie.title = params.fetch("query_title")
-    @the_movie.description = params.fetch("query_description")
+    @movie = Movie.new
+    @movie.title = params.fetch(:title)
+    @movie.description = params.fetch(:description)
 
-    if @the_movie.valid?
-      @the_movie.save
+    if @movie.valid?
+      @movie.save
       redirect_to movies_url, notice:"Movie was successfully created."
     else
       render "movies/new"
@@ -42,31 +38,31 @@ class MoviesController < ApplicationController
   def edit
     the_id = params.fetch(:id)
 
-    matching_movies = Movie.where({ id: the_id })
+    matching_movies = Movie.where(id: the_id)
 
-    @the_movie = matching_movies.first
+    @movie = matching_movies.first
   end
 
   def update
-    the_id = params.fetch(:id)
-    the_movie = Movie.where({ id: the_id }).first
+    id = params.fetch(:id)
+    movie = Movie.where(id: id).first
 
-    the_movie.title = params.fetch("query_title")
-    the_movie.description = params.fetch("query_description")
+    movie.title = params.fetch("query_title")
+    movie.description = params.fetch("query_description")
 
-    if the_movie.valid?
-      the_movie.save
-      redirect_to movies_url(the_movie.id), notice: "Movie updated successfully."
+    if movie.valid?
+      movie.save
+      redirect_to movies_url(movie.id), notice: "Movie updated successfully."
     else
-      redirect_to movies_url(the_movie.id), alert: "Movie failed to update successfully."
+      redirect_to movies_url(movie.id), alert: "Movie failed to update successfully."
     end
   end
 
   def destroy
-    the_id = params.fetch(:id)
-    the_movie = Movie.where({ id: the_id }).first
+    id = params.fetch(:id)
+    movie = Movie.where(id: id).first
 
-    the_movie.destroy
+    movie.destroy
 
     redirect_to movies_url, notice: "Movie deleted successfully."
   end
