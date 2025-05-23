@@ -4,13 +4,9 @@
   <p style="color: red;"><%= message %></p>
 <% end %>
 
-<form action="<%= movies_path %>" method="post">
-  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-
+<%= form_with(url: movies_path) do %>
   <div>
-    <label for="title_box">
-      Title
-    </label>
+    <%= label_tag :title_box, "Title" %>
 
     <input type="text" id="title_box" name="query_title" value="<%= @the_movie.title %>">
   </div>
@@ -26,4 +22,30 @@
   <button>
     Create Movie
   </button>
+
+<% end %>
+
+<!--<form action="<%#= movies_path %>" method="post">
+  <input name="authenticity_token" value="<%#= form_authenticity_token %>" type="hidden">
+
+  <div>
+    <label for="title_box">
+      Title
+    </label>
+
+    <input type="text" id="title_box" name="query_title" value="<%#= @the_movie.title %>">
+  </div>
+
+  <div>
+    <label for="description_box">
+      Description
+    </label>
+
+    <textarea id="description_box" name="query_description" rows="3"><%#= @the_movie.description %></textarea>
+  </div>
+
+  <button>
+    Create Movie
+  </button>
 </form>
+-->
